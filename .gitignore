@@ -1,11 +1,21 @@
-# Ignore node modules
+# Node dependencies
 node_modules/
 client/node_modules/
 server/node_modules/
 
-# Ignore environment files
+# Environment variables
 .env
+server/.env
 
-# Ignore build folders
+# Build outputs
 dist/
 build/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS files
+.DS_Store
+Thumbs.db
