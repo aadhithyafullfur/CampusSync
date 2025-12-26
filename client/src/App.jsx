@@ -1,21 +1,19 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import RegisterPage from './components/RegisterPage';
+import LoginPage from './components/LoginPage';
 
 function App() {
-  const [message, setMessage] = useState("");
-
-  useEffect(() => {
-    axios.get("http://localhost:5000/api/test")
-      .then(res => setMessage(res.data.message))
-      .catch(err => console.log(err));
-  }, []);
-
   return (
-    <div style={{ padding: "20px" }}>
-      <h1>Campus Resource Booking System</h1>
-      <p>Frontend is running ✅</p>
-      <p>Backend says: <b>{message}</b></p>
-    </div>
+    <Router>
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-gray-100 flex items-center justify-center p-4">
+        <Routes>
+          <Route path="/" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/login" element={<LoginPage />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
