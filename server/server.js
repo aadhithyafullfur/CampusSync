@@ -9,7 +9,11 @@ connectDB();
 
 const app = express();
 
-app.use(cors());
+// Enable CORS for all routes
+app.use(cors({
+  origin: process.env.NODE_ENV === 'production' ? null : 'http://localhost:5173',
+  credentials: true
+}));
 app.use(express.json());
 
 // Routes

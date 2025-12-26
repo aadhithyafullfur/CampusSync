@@ -14,6 +14,15 @@ const register = async (req, res) => {
   try {
     const { name, email, password, role, studentId, department, labName, eventResponsibility } = req.body;
 
+    // Validate role
+    const validRoles = ['student', 'labincharge', 'staffincharge', 'eventcoordinator', 'hod'];
+    if (!validRoles.includes(role)) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid role specified'
+      });
+    }
+
     // Create user based on role with appropriate fields
     // If name is not provided or is empty, generate from email
     const displayName = name && name.trim() !== '' ? name : email.split('@')[0] || 'User';
@@ -72,13 +81,13 @@ const register = async (req, res) => {
 // Login user
 const login = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { email, password, role } = req.body;
 
-    // Check if email and password exist
-    if (!email || !password) {
+    // Check if email, password, and role exist
+    if (!email || !password || !role) {
       return res.status(400).json({
         success: false,
-        message: 'Please provide an email and password'
+        message: 'Please provide email, password, and role'
       });
     }
 
@@ -89,6 +98,14 @@ const login = async (req, res) => {
       return res.status(401).json({
         success: false,
         message: 'Invalid credentials'
+      });
+    }
+
+    // Check if the requested role matches the user's role
+    if (user.role !== role) {
+      return res.status(401).json({
+        success: false,
+        message: 'Role mismatch. Please select the correct role for your account.'
       });
     }
 
